@@ -4,6 +4,10 @@
  */
 package statmedx1;
 
+import java.sql.Connection;
+import statmedx1.DatabaseConnection;
+
+
 /**
  *
  * @author Rikke
@@ -14,7 +18,8 @@ public class StatMedX1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         // TODO code application logic here
     }
-    
+    Connection connection = DatabaseConnection.getConnection();
 }
