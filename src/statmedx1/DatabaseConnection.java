@@ -12,17 +12,17 @@ import java.sql.SQLException;
  *
  * @author signekristiansen
  */public class DatabaseConnection {
-    private static Connection connection = null;
-
-    public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://db.course.hst.aau.dk:3306/hst_hst-22-st-5-5401?serverTimezone=UTC", "hst_hst-22-st-5-5401", "feeshoopasewoothoogi");
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return connection;
-    }
+//    private static Connection conn = null;
+//
+//    public static Connection getConnection() {
+//        if (conn == null) {
+//            try {
+//            // Establish a connection to the database
+//           Connection conn = DriverManager.getConnection("jdbc:mysql://db.course.hst.aau.dk:3306/hst_hst-22-st-5-5401?serverTimezone=UTC", "hst_hst-22-st-5-5401", "feeshoopasewoothoogi");
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return conn;
+//    }
 }

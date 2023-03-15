@@ -5,7 +5,11 @@
 package statmedx1;
 
 import java.sql.Connection;
+import java.util.List;
 import statmedx1.DatabaseConnection;
+import static statmedx1.Filter.EEfilter;
+
+
 
 
 /**
@@ -14,12 +18,19 @@ import statmedx1.DatabaseConnection;
  */
 public class StatMedX1 {
 
+    
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    //Connection conn = DatabaseConnection.getConnection();
+  
+       
+
         
-        // TODO code application logic here
-    }
-    Connection connection = DatabaseConnection.getConnection();
+    public static void main(String[] args) {
+        List<String> filteredValues = EEfilter();
+        System.out.println(filteredValues);
+    
+}
 }
