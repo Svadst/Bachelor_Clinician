@@ -1,3 +1,4 @@
+<<<<<<< OURS
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
@@ -7,6 +8,8 @@ package statmedx1;
 import java.sql.Connection;
 import java.util.List;
 import statmedx1.DatabaseConnection;
+import static statmedx1.Filter.EEfilter;
+
 import static statmedx1.Filter.EEfilter;
 
 
@@ -34,3 +37,25 @@ public class StatMedX1 {
     
 }
 }
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package statmedx1;
+
+/**
+ *
+ * @author Rikke
+ */
+public class StatMedX1 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+    }
+    
+}
+
