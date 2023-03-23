@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.List;
 import statmedx1.DatabaseConnection;
 import static statmedx1.Filter.EEfilter;
-
+import statmedx1.RQcalculator;
 
 
 
@@ -29,8 +29,10 @@ public class StatMedX1 {
 
         
     public static void main(String[] args) {
-        List<String> filteredValues = EEfilter();
-        System.out.println(filteredValues);
-    
+//        List<String> filteredValues = EEfilter();
+//        System.out.println(filteredValues);
+        RQcalculator calculator = new RQcalculator();
+        calculator.createNewColumn();
+//    
 }
 }

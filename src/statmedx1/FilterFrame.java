@@ -4,7 +4,19 @@
  */
 package statmedx1;
 
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import statmedx1.DatabaseConnection;
 import static statmedx1.Filter.EEfilter;
 
 /**
@@ -12,6 +24,11 @@ import static statmedx1.Filter.EEfilter;
  * @author signekristiansen
  */
 public class FilterFrame extends javax.swing.JFrame {
+    private boolean Nofilter = false;
+    private boolean EEfilter = false;
+    private boolean RQfilter = false;
+    private boolean FiO2filter = false;
+    private boolean PEEPfilter = false;
 
     /**
      * Creates new form FilterFrame
@@ -42,6 +59,18 @@ public class FilterFrame extends javax.swing.JFrame {
         PEEP_filter = new javax.swing.JCheckBox();
         FiO2_filter = new javax.swing.JCheckBox();
         apply_filters = new javax.swing.JButton();
+        RQ_lower = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        RQ_upper = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        PEEP_lower = new javax.swing.JTextField();
+        FIO2_lower = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        EE_lower = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,6 +122,30 @@ public class FilterFrame extends javax.swing.JFrame {
             }
         });
 
+        RQ_lower.setText("0.7");
+
+        jLabel1.setText("kcal/day");
+
+        jLabel2.setText("Chose lower level for RQ");
+
+        jLabel3.setText("Chose lower level for energy expenditure");
+
+        jLabel4.setText("Chose upper level for RQ");
+
+        RQ_upper.setText("1.0");
+
+        jLabel5.setText("Chose upper level for FiO2");
+
+        PEEP_lower.setText("10");
+
+        FIO2_lower.setText("0.6");
+
+        jLabel6.setText("Chose upper level for PEEP");
+
+        jLabel7.setText("cmH2O");
+
+        EE_lower.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,38 +156,89 @@ public class FilterFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(147, 147, 147)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(FiO2_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PEEP_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RQ_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(EE_filter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(No_filter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)))
-                .addContainerGap(201, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(PEEP_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(181, 181, 181))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(No_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FiO2_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PEEP_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RQ_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RQ_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RQ_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(FIO2_lower)
+                                .addGap(316, 316, 316))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(EE_filter)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(EE_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(293, 293, 293)
                 .addComponent(apply_filters, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(270, 270, 270))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(19, 19, 19)
                 .addComponent(jButton2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(No_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(EE_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EE_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EE_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RQ_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RQ_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RQ_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(FiO2_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FIO2_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PEEP_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PEEP_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                 .addComponent(apply_filters)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -142,28 +246,116 @@ public class FilterFrame extends javax.swing.JFrame {
 
     private void No_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_No_filterActionPerformed
         // TODO add your handling code here:
+        
+        if(No_filter.isSelected()){
+            Nofilter = true;
+        }
+        else{
+            Nofilter = false;
+        }
     }//GEN-LAST:event_No_filterActionPerformed
 
     private void EE_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EE_filterActionPerformed
         // TODO add your handling code here:
-        List<String> filteredValues = EEfilter();
-        System.out.println(filteredValues);
+          if(EE_filter.isSelected()){
+            EEfilter = true;
+        }
+        else{
+            EEfilter = false;
+        }
     }//GEN-LAST:event_EE_filterActionPerformed
 
     private void PEEP_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PEEP_filterActionPerformed
         // TODO add your handling code here:
+          if(PEEP_filter.isSelected()){
+            PEEPfilter = true;
+        }
+        else{
+            PEEPfilter = false;
+        }
     }//GEN-LAST:event_PEEP_filterActionPerformed
 
     private void RQ_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RQ_filterActionPerformed
         // TODO add your handling code here:
+          if(RQ_filter.isSelected()){
+            RQfilter = true;
+        }
+        else{
+            RQfilter = false;
+        }
     }//GEN-LAST:event_RQ_filterActionPerformed
 
     private void FiO2_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiO2_filterActionPerformed
         // TODO add your handling code here:
+          if(FiO2_filter.isSelected()){
+            FiO2filter = true;
+        }
+        else{
+            FiO2filter = false;
+        }
     }//GEN-LAST:event_FiO2_filterActionPerformed
 
     private void apply_filtersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apply_filtersActionPerformed
         // TODO add your handling code here:
+       
+//        try{
+//        Connection connection;
+//        connection = DatabaseConnection.getConnection();
+        if(Nofilter == false && EEfilter==false && RQfilter==false && FiO2filter==false && PEEPfilter==false){
+            String message = "Please choose a filter before continuing";
+            JOptionPane.showMessageDialog(this, message);
+        }
+        else if(Nofilter == true){
+           System.out.println("Select all data");
+          
+        }
+        // EE filter
+        else if(EEfilter ==true){
+            if(RQfilter == false && PEEPfilter == false && FiO2filter == false){
+           //System.out.println("Only use EE filter");
+           int filterValue = Integer.parseInt(EE_lower.getText()); // Get the value entered by the user   
+           String sqlQuery = "SELECT EE FROM TABLE16 WHERE EE > ? "; // Set the SQL query to execute
+           List<String> filteredValues = Filter.EEfilter(sqlQuery, filterValue); // Call the EEfilter() method with the SQL query and the user's input as parameters
+           String message = "Filtered values:\n" + String.join("\n", filteredValues); // Create a message with the filtered values
+           JOptionPane.showMessageDialog(this, message); // Display the message in a dialog box
+         
+            }
+            
+            else if(RQfilter == true && PEEPfilter == false && FiO2filter == false){
+              System.out.println("Use EE filter and RQ filter");  
+            }
+            
+            else if(RQfilter ==true){
+            if(EEfilter == false && PEEPfilter == false && FiO2filter == false){
+           //System.out.println("Only use EE filter");
+           int filterValue = Integer.parseInt(RQ_lower.getText()); // Get the value entered by the user   
+           String sqlQuery = "SELECT EE FROM TABLE16 WHERE RQ > ? "; // Set the SQL query to execute
+           List<String> filteredValues = Filter.EEfilter(sqlQuery, filterValue); // Call the EEfilter() method with the SQL query and the user's input as parameters
+           String message = "Filtered values:\n" + String.join("\n", filteredValues); // Create a message with the filtered values
+           JOptionPane.showMessageDialog(this, message); // Display the message in a dialog box
+         
+            }
+            }
+            
+           
+            
+        }
+       
+        
+        
+//        else if(EEfilter == true && Nofilter == false){
+//        List<String> filteredValues = EEfilter();
+//        System.out.println(filteredValues);
+//        }
+        
+        
+//       catch (HeadlessException e) {
+//            JOptionPane.showMessageDialog(null,e);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(FilterFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+
     }//GEN-LAST:event_apply_filtersActionPerformed
 
     /**
@@ -203,10 +395,15 @@ public class FilterFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox EE_filter;
+    private javax.swing.JTextField EE_lower;
+    private javax.swing.JTextField FIO2_lower;
     private javax.swing.JCheckBox FiO2_filter;
     private javax.swing.JCheckBox No_filter;
     private javax.swing.JCheckBox PEEP_filter;
+    private javax.swing.JTextField PEEP_lower;
     private javax.swing.JCheckBox RQ_filter;
+    private javax.swing.JTextField RQ_lower;
+    private javax.swing.JTextField RQ_upper;
     private javax.swing.JButton apply_filters;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -215,5 +412,12 @@ public class FilterFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }
