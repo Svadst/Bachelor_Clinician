@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import statmedx1.DatabaseConnection;
+import statmedx1.DatabaseTEST;
 
 /**
  *
@@ -19,8 +20,8 @@ public class Filter {
         
         try {
             // Establish a connection to the database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://db.course.hst.aau.dk:3306/hst_hst-22-st-5-5401?serverTimezone=UTC", "hst_hst-22-st-5-5401", "feeshoopasewoothoogi");
-            
+            //Connection conn = DriverManager.getConnection("jdbc:mysql://db.course.hst.aau.dk:3306/hst_hst-22-st-5-5401?serverTimezone=UTC", "hst_hst-22-st-5-5401", "feeshoopasewoothoogi");
+            Connection conn = DatabaseTEST.getInstance().getConnection(); 
            // Create a statement to execute a SQL query with a parameter
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
             stmt.setInt(1, filterValue);

@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
@@ -9,6 +10,11 @@ import java.util.List;
 import statmedx1.DatabaseConnection;
 import static statmedx1.Filter.EEfilter;
 import statmedx1.RQcalculator;
+
+
+import static statmedx1.Filter.EEfilter;
+
+
 
 
 
@@ -36,3 +42,5 @@ public class StatMedX1 {
 //    
 }
 }
+
+

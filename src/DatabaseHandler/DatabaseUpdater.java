@@ -28,7 +28,7 @@ public class DatabaseUpdater {
             updateTable(conn);
             
             // Add a new column to the table
-            addColumn(conn);
+            //addColumn(conn);
             
             // Close the connection
             conn.close();
@@ -44,18 +44,18 @@ public class DatabaseUpdater {
         int rowsUpdated = stmt.executeUpdate(sql);
         System.out.println("Rows updated: " + rowsUpdated);
     }
-    
-    private static void addColumn(Connection conn) throws SQLException {
-        // Add a new column to the table
-        String sqlAlterTable = "ALTER TABLE TABLE16 ADD RQ FLOAT";
-        Statement stmtAlterTable = conn.createStatement();
-        stmtAlterTable.execute(sqlAlterTable);
-        
-        // Calculate the values for the new column
-        String sqlUpdate = "UPDATE TABLE16 SET RQ = CASE WHEN VO2 > 0 AND VCO2 >= 0 THEN VCO2 / VO2 ELSE NULL END";
-        Statement stmtUpdate = conn.createStatement();
-        int rowsUpdated = stmtUpdate.executeUpdate(sqlUpdate);
-        System.out.println("Rows updated: " + rowsUpdated);
-    }
+//    
+//    private static void addColumn(Connection conn) throws SQLException {
+//        // Add a new column to the table
+//        String sqlAlterTable = "ALTER TABLE TABLE16 ADD RQ FLOAT";
+//        Statement stmtAlterTable = conn.createStatement();
+//        stmtAlterTable.execute(sqlAlterTable);
+//        
+//        // Calculate the values for the new column
+//        String sqlUpdate = "UPDATE TABLE16 SET RQ = CASE WHEN VO2 > 0 AND VCO2 >= 0 THEN VCO2 / VO2 ELSE NULL END";
+//        Statement stmtUpdate = conn.createStatement();
+//        int rowsUpdated = stmtUpdate.executeUpdate(sqlUpdate);
+//        System.out.println("Rows updated: " + rowsUpdated);
+//    }
 
 }
