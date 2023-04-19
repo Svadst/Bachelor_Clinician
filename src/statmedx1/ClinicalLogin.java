@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import DatabaseHandler.DatabaseConnection;
 //import static sun.security.ssl.SSLLogger.severe;
 
 /**
@@ -137,16 +138,16 @@ public class ClinicalLogin extends javax.swing.JFrame {
         //PreparedStatement pst = conn.prepareStatement(sql);
         
         //Connection to database from class DatabaseTEST
-        Connection conn = DatabaseTEST.getInstance().getConnection(); 
+        Connection conn = DatabaseConnection.getInstance().getConnection(); 
         String sql = "Select * from ClinicianID where ClinicianIDText=? and Password=?";
         PreparedStatement pst = conn.prepareStatement(sql);
         
-        pst.setString(1, ClinicalID.getText());
+        pst.setString(1 , ClinicalID.getText());
         pst.setString(2, ClPassword.getText());
         ResultSet rs = pst.executeQuery();
             if(rs.next()){
                 dispose();
-                FilterFrame Fpage = new FilterFrame();
+                FilterFrameold Fpage = new FilterFrameold();
                 Fpage.show();
                 
              }else{

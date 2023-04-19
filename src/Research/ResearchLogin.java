@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package statmedx1;
+package Research;
 
 import java.awt.HeadlessException;
 import java.sql.Connection;
@@ -13,6 +13,10 @@ import java.sql.SQLException;
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import statmedx1.DatabaseTEST;
+import statmedx1.FilterFrameold;
+import RESEARCHER.Visualise;
+import DatabaseHandler.DatabaseConnection;
 //import static statmedx1.DatabaseConnection.getConnection;
 
 /**
@@ -134,8 +138,8 @@ public class ResearchLogin extends javax.swing.JFrame {
         //Connection conn = DriverManager.getConnection("jdbc:mysql://db.course.hst.aau.dk:3306/hst_hst-22-st-5-5401?serverTimezone=UTC","hst_hst-22-st-5-5401","feeshoopasewoothoogi");
        
         //Connection to database from class DatabaseTEST
-        Connection conn = DatabaseTEST.getInstance().getConnection();
-        String sql = "Select * from ReseachID where ReseacherID=? and RePassword=?";
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        String sql = "Select * from ResearchID where ReseacherID=? and RePassword=?";
         PreparedStatement pst = conn.prepareStatement(sql);
         
         //PreparedStatement pst = conn.prepareStatement(sql);
@@ -144,8 +148,9 @@ public class ResearchLogin extends javax.swing.JFrame {
         ResultSet rs = pst.executeQuery();
             if(rs.next()){
                 dispose();
-                FilterFrame Fpage = new FilterFrame();
-                Fpage.show();
+                Visualise Dpage;
+            Dpage = new Visualise();
+                Dpage.show();
                 
             }else{
                JOptionPane.showMessageDialog(null, "Your credientials are wrong, try again"); 
