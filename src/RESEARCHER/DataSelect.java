@@ -12,7 +12,7 @@ import RESEARCHER.Patient;
 public class DataSelect {
     private Connection conn;
 
-  public Map<String, List<Object>> fetchData(List<String> aetiologies) {
+  public Map<String, List<Object>> fetchData(int unitID, List<String> aetiologies) {
     Map<String, List<Object>> resultMap = new HashMap<>();
 
     try {
@@ -34,7 +34,6 @@ public class DataSelect {
                               patientResult.getString("Gender"),
                               patientResult.getInt("age"),
                               patientResult.getInt("Weight"),
-                              patientResult.getInt("Height"),
                               patientResult.getString("aetiology"));
             patient.setUnitID(patientResult.getInt("UnitID"));
             patient.setGender(patientResult.getString("Gender"));

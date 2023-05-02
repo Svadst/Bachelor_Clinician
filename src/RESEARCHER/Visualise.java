@@ -201,6 +201,11 @@ public class Visualise extends javax.swing.JFrame {
 
         RQlow.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         RQlow.setText("0.7");
+        RQlow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RQlowActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setText("and");
@@ -210,6 +215,11 @@ public class Visualise extends javax.swing.JFrame {
 
         FiO2val.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         FiO2val.setText("0.6");
+        FiO2val.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FiO2valActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel7.setText("cmH20");
@@ -307,7 +317,6 @@ public class Visualise extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(PEEPval, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,12 +336,11 @@ public class Visualise extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 496, Short.MAX_VALUE)
                 .addComponent(jLabel2))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(402, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +416,7 @@ public class Visualise extends javax.swing.JFrame {
         else{
         
 DataSelect dataSelect = new DataSelect();
-Map<String, List<Object>> SelectedData = dataSelect.fetchData(selectedAetiologies);
+Map<String, List<Object>> SelectedData = dataSelect.fetchData(UnitID, selectedAetiologies);
 // Print the data
 for (Map.Entry<String, List<Object>> entry : SelectedData.entrySet()) {
     System.out.println(entry.getKey());
@@ -514,6 +522,14 @@ for (Map.Entry<String, List<Object>> entry : SelectedData.entrySet()) {
 //            //VariableSelect.VariableSelecter(Filterdata);
 //        }
     }//GEN-LAST:event_SelectFilterActionPerformed
+
+    private void RQlowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RQlowActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RQlowActionPerformed
+
+    private void FiO2valActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiO2valActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FiO2valActionPerformed
 
   
     /**

@@ -14,7 +14,7 @@ public class Patient {
     private String aetiology;
     private List<ICData> icDataList;
 
-    public Patient(int unitID, String gender, int age, int weight, int height, String aetiology) {
+    public Patient(int unitID, String gender, int age, int weight, String aetiology) {
         this.unitID = unitID;
         this.gender = gender;
         this.age = age;
@@ -44,7 +44,7 @@ public class Patient {
         return weight;
     }
 
-    public int setHeight(int Int) {
+    public int getHeight(int Int) {
         return height;
     }
 
@@ -60,7 +60,7 @@ public class Patient {
         icDataList.add(icData);
     }
     
- // override the toString() method  return a string representation of the object's data.   
+ // override the toString() method return a string representation of the object's data.   
 @Override
 public String toString() {
     return "Patient{" +
@@ -72,7 +72,7 @@ public String toString() {
             ", aetiology='" + aetiology + '\'' +
             '}';
 }
- 
-    
+
+
     
 }
